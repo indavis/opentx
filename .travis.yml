@@ -1,13 +1,23 @@
 language: cpp
 
 before_install:
-    - sudo apt-get remove cmake cmake-data --yes
-    - sudo add-apt-repository ppa:george-edison55/precise-backports --yes
-    - sudo add-apt-repository ppa:terry.guo/gcc-arm-embedded --yes
-    - sudo apt-get update    
+  - sudo apt-get remove cmake cmake-data --yes
+  - sudo add-apt-repository ppa:george-edison55/precise-backports --yes
+  - sudo add-apt-repository ppa:terry.guo/gcc-arm-embedded --yes
+  - sudo apt-get update    
 
 install:
-  - sudo apt-get install -y xvfb lcov cmake cmake-data bc curl gcc-arm-none-eabi gcc-avr avr-libc avrdude libqtcore4 libqt4-dev qt4-qmake g++ libxerces-c-dev xsdcxx libsdl1.2-dev libusb-1.0-0 libphonon-dev phonon libqtwebkit-dev python-qt4 python-qt4-dev libfox-1.6-dev libgtest-dev
+  - sudo apt-get install -y xvfb fontconfig-config
+  - sudo apt-get install -y lcov cmake cmake-data bc curl 
+  - sudo apt-get install -y g++ gcc-arm-none-eabi gcc-avr avr-libc avrdude 
+  - sudo apt-get install -y libqtcore4 libqt4-dev qt4-qmake  libxerces-c-dev xsdcxx libsdl1.2-dev libusb-1.0-0 
+  - sudo apt-get install -y libphonon-dev phonon libqtwebkit-dev python-qt4 python-qt4-dev libfox-1.6-dev 
+  - sudo apt-get install -y libgtest-dev
+
+before_script:
+  - "export DISPLAY=:99.0"
+  - "sh -e /etc/init.d/xvfb start"
+  - sleep 3 # give xvfb some time to start
 
 script:
   - radio/util/commit-tests.sh
